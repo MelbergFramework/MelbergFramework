@@ -71,6 +71,7 @@ public class MelbergHost
     {
         ServiceActions += (IServiceCollection _) => {
             _.AddControllers();
+            _.AddSwaggerGen();
         };
 
         AppActions += (WebApplication _) => {
@@ -90,7 +91,6 @@ public class MelbergHost
             .AddOptions<ApplicationConfiguration>()
             .BindConfiguration(ApplicationConfiguration.Section)
             .ValidateDataAnnotations();
-        builder.Services.AddSwaggerGen();
 
         var app = builder.Build();
 

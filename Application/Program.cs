@@ -18,13 +18,6 @@ internal class Program
             .Services.GetRequiredService<IHealthCheckChecker>().IsOk();
 
 
-        var mock = (MockClock)app.Services.GetRequiredService<IClock>();
-
-        mock.NewCurrentTime = DateTime.MaxValue;
-
-        var clock = app.Services.GetRequiredService<IClock>();
-
-        Console.WriteLine(clock.GetUtcNow == mock.GetUtcNow);
         await app.RunAsync();
     }
 

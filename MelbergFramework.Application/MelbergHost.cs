@@ -77,6 +77,13 @@ public class MelbergHost
         AppActions += (WebApplication _) => {
             _.UseSwagger();
             _.UseSwaggerUI();
+            _.UseCors(_ => _
+             .AllowAnyHeader()
+             .AllowAnyMethod()
+             .SetIsOriginAllowed(origin => true)
+             .AllowCredentials()
+             );
+            _.UseHttpsRedirection();
         };
 
         return this;
@@ -102,14 +109,7 @@ public class MelbergHost
                     .GetRequiredService<IHealthCheckChecker>()
                     .IsOk());
 
-        app.UseHttpsRedirection();
 
-        app.UseCors(_ => _
-            .AllowAnyHeader()
-            .AllowAnyMethod()
-            .SetIsOriginAllowed(origin => true)
-            .AllowCredentials()
-            );
 
 
         return app;

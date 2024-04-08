@@ -1,8 +1,5 @@
 using Application.Example;
-using MelbergFramework.Core.ComponentTesting;
-using MelbergFramework.Core.DependencyInjection;
 using MelbergFramework.Core.HealthCheck;
-using MelbergFramework.Core.Time;
 using MelbergFramework.Application;
 
 internal class Program
@@ -11,7 +8,6 @@ internal class Program
     {
         var app = MelbergHost
             .CreateHost<DemoRegistrator>()
-            .AddControllers()
             .Build();
 
         var isGood = await app

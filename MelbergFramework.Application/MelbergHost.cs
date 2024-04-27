@@ -84,6 +84,7 @@ public class MelbergHost
              .AllowCredentials()
              );
             _.UseHttpsRedirection();
+            _.MapControllers();
         };
 
         return this;

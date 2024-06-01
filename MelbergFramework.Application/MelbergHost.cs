@@ -83,7 +83,6 @@ public class MelbergHost
              .SetIsOriginAllowed(origin => true)
              .AllowCredentials()
              );
-            _.UseHttpsRedirection();
             _.MapControllers();
         };
 

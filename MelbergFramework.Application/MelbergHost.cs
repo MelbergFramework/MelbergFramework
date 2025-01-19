@@ -2,6 +2,7 @@ using MelbergFramework.Core.HealthCheck;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 
 namespace MelbergFramework.Application;
 
@@ -72,16 +73,22 @@ public class MelbergHost
         ServiceActions += (IServiceCollection _) => {
             _.AddControllers();
             _.AddSwaggerGen();
+
+            _.AddOptions<CorsConfiguration>()
+            .BindConfiguration(CorsConfiguration.Section)
+            .ValidateDataAnnotations();
         };
 
         AppActions += (WebApplication _) => {
+            var j = _.Services.GetService<IOptions<CorsConfiguration>>()!.Value.AllowedHosts;
+                Console.WriteLine(j);
             _.UseSwagger();
             _.UseSwaggerUI();
-            _.UseCors(_ => _
-             .AllowAnyHeader()
-             .AllowAnyMethod()
-             .SetIsOriginAllowed(origin => true)
-             .AllowCredentials()
+            _.UseCors(a => a
+                 .AllowAnyHeader()
+                 .AllowAnyMethod()
+                 .WithOrigins(j)
+                 .AllowCredentials()
              );
             _.MapControllers();
         };
@@ -98,6 +105,7 @@ public class MelbergHost
             .AddOptions<ApplicationConfiguration>()
             .BindConfiguration(ApplicationConfiguration.Section)
             .ValidateDataAnnotations();
+
 
         var app = builder.Build();
 

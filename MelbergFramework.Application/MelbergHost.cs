@@ -80,14 +80,12 @@ public class MelbergHost
         };
 
         AppActions += (WebApplication _) => {
-            var j = _.Services.GetService<IOptions<CorsConfiguration>>()!.Value.AllowedHosts;
-                Console.WriteLine(j);
             _.UseSwagger();
             _.UseSwaggerUI();
             _.UseCors(a => a
                  .AllowAnyHeader()
                  .AllowAnyMethod()
-                 .WithOrigins(j)
+                 .WithOrigins(_.Services.GetService<IOptions<CorsConfiguration>>()!.Value.AllowedHosts)
                  .AllowCredentials()
              );
             _.MapControllers();

@@ -8,6 +8,7 @@ internal class Program
     {
         var app = MelbergHost
             .CreateHost<DemoRegistrator>()
+            .AddControllers()
             .Build();
 
         var isGood = await app
